@@ -12,7 +12,7 @@ jobs:
         defconfig:
           - phoenix_ztc1997_defconfig
     env:
-      ANYKERNEL3_FILE: "AnyKernel3-miui-phoenix"
+      ANYKERNEL3_FILE: "AnyKernel3-miui-phoenix-sukisuu"
     steps:
       - name: Set builddate
         id: generate-builddate
@@ -40,6 +40,17 @@ jobs:
       - name: Get build tools
         run: |
           git clone https://github.com/luyanci/kernel_bulid --depth=1 -j$(nproc) tools
+          
+      - name: do something before build
+        working-directory: kernel
+        run: |
+          cd KernelSU
+          wget https://github.com/luyanci/kernel_xiaomi_phoenix/raw/12-sukisuu-155-kpm/fix.patch
+          patch -p1 < fix.patch
+          cd ..
+          chmod +x patch_kpm.sh
+          ./patch_kpm.sh --download
+          
       - name: Build Kernel
         working-directory: kernel
         run: >
