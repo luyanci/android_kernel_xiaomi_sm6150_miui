@@ -46,7 +46,7 @@ jobs:
         run: |
           cd KernelSU
           git fetch
-          git checkout susfs-dev
+          git checkout origin/susfs-dev
           cd ..
           chmod +x patch_kpm.sh
           ./patch_kpm.sh --download
