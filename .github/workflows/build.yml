@@ -45,8 +45,8 @@ jobs:
         working-directory: kernel
         run: |
           cd KernelSU
-          wget https://github.com/luyanci/kernel_xiaomi_phoenix/raw/12-sukisuu-155-kpm/fix.patch
-          patch -p1 < fix.patch
+          git fetch
+          git checkout susfs-dev
           cd ..
           chmod +x patch_kpm.sh
           ./patch_kpm.sh --download
