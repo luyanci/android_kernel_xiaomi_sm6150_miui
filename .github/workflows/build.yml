@@ -25,7 +25,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           path: kernel
-          submodules: recursive
       - name: ⭐ Install prerequisites
         run: |
           sudo apt-get update
@@ -43,6 +42,11 @@ jobs:
       - name: Build Kernel
         working-directory: kernel
         run: >
+          git submodule update --init --recursive
+          cd KernelSU
+          git fetch
+          git checkout origin/main
+          cd ..
           make O=out ARCH=arm64 CC=$GITHUB_WORKSPACE/tools/toolclang/clang-r428724/bin/clang CROSS_COMPILE=$GITHUB_WORKSPACE/tools/toolgcc/bin/aarch64-linux-android- CROSS_COMPILE_ARM32=$GITHUB_WORKSPACE/tools/toolgcc/bin/arm-linux-androideabi- CLANG_TRIPLE=aarch64-linux-gnu- AR=$GITHUB_WORKSPACE/tools/toolclang/clang-r428724/bin/llvm-ar HOSTCC=gcc HOSTCXX=$GITHUB_WORKSPACE/tools/toolclang/clang-r428724/bin/clang++ NM=$GITHUB_WORKSPACE/tools/toolclang/clang-r428724/bin/llvm-nm OBJCOPY=$GITHUB_WORKSPACE/tools/toolclang/clang-r428724/bin/llvm-objcopy OBJDUMP=$GITHUB_WORKSPACE/tools/toolclang/clang-r428724/bin/llvm-objdump STRIP=$GITHUB_WORKSPACE/tools/toolclang/clang-r428724/bin/llvm-strip LD=$GITHUB_WORKSPACE/tools/toolclang/clang-r428724/bin/ld.lld DTC_EXT=$GITHUB_WORKSPACE/tools/dtc vendor/${{matrix.defconfig}}
           
           make O=out ARCH=arm64 CC=$GITHUB_WORKSPACE/tools/toolclang/clang-r428724/bin/clang CROSS_COMPILE=$GITHUB_WORKSPACE/tools/toolgcc/bin/aarch64-linux-android- CROSS_COMPILE_ARM32=$GITHUB_WORKSPACE/tools/toolgcc/bin/arm-linux-androideabi- CLANG_TRIPLE=aarch64-linux-gnu- AR=$GITHUB_WORKSPACE/tools/toolclang/clang-r428724/bin/llvm-ar HOSTCC=gcc HOSTCXX=$GITHUB_WORKSPACE/tools/toolclang/clang-r428724/bin/clang++ NM=$GITHUB_WORKSPACE/tools/toolclang/clang-r428724/bin/llvm-nm OBJCOPY=$GITHUB_WORKSPACE/tools/toolclang/clang-r428724/bin/llvm-objcopy OBJDUMP=$GITHUB_WORKSPACE/tools/toolclang/clang-r428724/bin/llvm-objdump STRIP=$GITHUB_WORKSPACE/tools/toolclang/clang-r428724/bin/llvm-strip LD=$GITHUB_WORKSPACE/tools/toolclang/clang-r428724/bin/ld.lld DTC_EXT=$GITHUB_WORKSPACE/tools/dtc -j$(nproc)
