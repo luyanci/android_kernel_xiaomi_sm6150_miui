@@ -47,7 +47,7 @@ jobs:
           git submodule update --init --recursive
           cd KernelSU
           git fetch
-          git checkout origin/susfs-dev
+          git checkout origin/susfs-main
           cd ..
           chmod +x patch_kpm.sh
           ./patch_kpm.sh --download
