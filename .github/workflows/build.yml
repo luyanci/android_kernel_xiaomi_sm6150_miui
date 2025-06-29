@@ -47,7 +47,7 @@ jobs:
           git submodule update --init --recursive
           cd KernelSU
           git fetch
-          git checkout origin/susfs-main
+          git checkout origin/susfs-1.5.7
           cd ..
           chmod +x patch_kpm.sh
           ./patch_kpm.sh --download
@@ -63,7 +63,7 @@ jobs:
         run: |
           cp ./out/arch/arm64/boot/Image.gz ./AnyKernel3/
           cp ./out/arch/arm64/boot/dtbo.img ./AnyKernel3/
-          cp ./out/arch/arm64/boot/dts/qcom/sdmmagpie.dtb ./AnyKernel3/
+          cp ./out/arch/arm64/boot/dts/qcom/sdmmagpie.dtb ./AnyKernel3/dtb
           cd AnyKernel3/
           zip -q -r "${{ env.ANYKERNEL3_FILE }}.zip" *
       - name: Upload to release
